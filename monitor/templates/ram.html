@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>RAM Usage - {{ server.ip }}</h2>
+<div class="mt-3">
+    <h5>Total RAM Usage: {{ server.data.ram.usage_percent }}% ({{ server.data.ram.usage_gb }} GB)</h5>
+    <canvas id="ramChart" width="400" height="200"></canvas>
+</div>
+<script>
+    const ctx = document.getElementById('ramChart').getContext('2d');
+    const ramChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Used', 'Free'],
+            datasets: [{
+                data: [parseFloat('{{ server.data.ram.usage_percent }}'), 100 - parseFloat('{{ server.data.ram.usage_percent }}')],
+                backgroundColor: ['rgba(153, 102, 255, 0.2)', 'rgba(75, 192, 192, 0.2)'],
+                borderColor: ['rgba(153, 102, 255, 1)', 'rgba(75, 192, 192, 1)'],
+                borderWidth: 1
+            }]
+        }
+    });
+</script>
+{% endblock %}

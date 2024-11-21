@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Dashboard</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>IP Address</th>
+            <th>Ping Status</th>
+            <th>SSH Status</th>
+            <th>Last Update</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for server in servers %}
+        <tr>
+            <td>{{ server.ip }}</td>
+            <td>{{ "Online" if server.data else "Offline" }}</td>
+            <td>{{ "Online" if server.data else "Offline" }}</td>
+            <td>{{ server.last_update }}</td>
+            <td><a href="/server/{{ server.ip }}" class="btn btn-primary btn-sm">View</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

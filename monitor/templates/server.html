@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Server: {{ server.ip }}</h2>
+<ul class="nav nav-tabs">
+    <li class="nav-item"><a class="nav-link active" href="/server/{{ server.ip }}">Summary</a></li>
+    <li class="nav-item"><a class="nav-link" href="/server/{{ server.ip }}/specs">Specs</a></li>
+    <li class="nav-item"><a class="nav-link" href="/server/{{ server.ip }}/cpu">CPU</a></li>
+    <li class="nav-item"><a class="nav-link" href="/server/{{ server.ip }}/gpu">GPU</a></li>
+    <li class="nav-item"><a class="nav-link" href="/server/{{ server.ip }}/ram">RAM</a></li>
+    <li class="nav-item"><a class="nav-link" href="/server/{{ server.ip }}/log">Logs</a></li>
+</ul>
+<div class="mt-3">
+    <h5>Summary</h5>
+    <p><strong>Ping Status:</strong> {{ "Online" if server.data else "Offline" }}</p>
+    <p><strong>SSH Status:</strong> {{ "Online" if server.data else "Offline" }}</p>
+    <p><strong>CPU Usage:</strong> {{ server.data.cpu.usage_total }}%</p>
+    <p><strong>RAM Usage:</strong> {{ server.data.ram.usage_percent }}% ({{ server.data.ram.usage_gb }} GB)</p>
+    <p><strong>GPU Usage:</strong> {{ server.data.gpu[0].usage if server.data.gpu else "N/A" }}</p>
+    <h6>Recent Logs:</h6>
+    <ul>
+        {% for log in logs %}
+        <li>{{ log.timestamp }} - {{ log.error }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Error Logs - {{ server.ip }}</h2>
+<div class="mt-3">
+    {% if logs %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Error</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                <tr>
+                    <td>{{ log.timestamp }}</td>
+                    <td>{{ log.error }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No logs available.</p>
+    {% endif %}
+</div>
+{% endblock %}
